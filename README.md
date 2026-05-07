@@ -1,10 +1,16 @@
 Changelog:
-    Se ha implementado un sistema de seguimiento para medir el rendimiento del jugador a lo largo de la partida, resolviendo así uno de los ejercicios propuestos en la versión original. A continuación, se detallan los cambios técnicos:
+    Se han implementado mejoras significativas en la experiencia de usuario y en el ciclo de vida del juego. Se introdujo un sistema de seguimiento para medir el rendimiento del jugador y una condición de victoria para detectar automáticamente la resolución del puzzle.
 
 Nuevas Funcionalidades
-- Contador de Movimientos: Se introdujo una nueva variable de estado ('taps': 0) dentro del diccionario global state. Esta variable registra la cantidad de veces que el jugador interactúa con el tablero.
+- Contador de Movimientos: Se introdujo una nueva variable de estado ('taps': 0) dentro del diccionario global state que registra la cantidad de interacciones del jugador.
 
-- Interfaz de Usuario en Tiempo Real: Se añadió un bloque de renderizado en la función draw() que dibuja un contador de texto (Taps: X) en la esquina superior izquierda de la pantalla, actualizándose constantemente a medida que avanza el juego.
+- Interfaz de Usuario  en Tiempo Real: Se añadió un contador de texto (Taps: X) en la esquina superior izquierda de la pantalla, que se actualiza constantemente durante la partida.
+
+- Mensaje de Victoria: Se integró un aviso visual que despliega el mensaje "You Win!" en color rojo y formato negrita en el centro de la pantalla cuando se descubren todos los pares.
 
 Ajustes en la Lógica
-- Captura de Eventos de Clic: Dentro de la función tap(x, y), se agregó un incremento directo al estado del contador (state['taps'] += 1). Ahora, cada vez que la función detecta una pulsación en la pantalla, independientemente de si se descubre un par o no, el movimiento queda registrado.
+- Captura de Eventos de Clic: En la función tap(x, y), se agregó un incremento directo al estado del contador (state['taps'] += 1). Cada pulsación en la pantalla queda registrada como un movimiento.
+
+Validación del Arreglo de Fichas: Dentro de la función draw(), se incorporó la condición if not any(hide): para evaluar la lista booleana de fichas ocultas. Si no queda ningún valor True, se activa la secuencia de finalización.
+
+Interrupción del Ciclo de Renderizado: Al cumplirse la condición de victoria, la función ejecuta un update() final y un return, interrumpiendo el bucle recursivo ontimer(draw, 100). Esto detiene el procesamiento en segundo plano y optimiza el uso de recursos al concluir la partida.

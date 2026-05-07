@@ -76,6 +76,15 @@ def draw():
     color('black')
     write('Taps: {}'.format(state['taps']), font=('Arial', 16, 'normal'))
 
+    """Completion detection"""
+    if not any(hide):
+        up()
+        goto(-90, 0)
+        color('red')
+        write('You Win!', font=('Arial', 30, 'bold'))
+        update()
+        return
+
     update()
     ontimer(draw, 100)
 
